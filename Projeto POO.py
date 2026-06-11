@@ -1,3 +1,5 @@
+# Projeto de POO - Sistema de Delivery
+#craiação de classes
 class Pessoa:
     def __init__(self, nome, telefone, cpf):
         self.nome = nome
@@ -11,7 +13,8 @@ class Pessoa:
 
     def mostrar_funcao(self):
         print(f"\n{self.nome} é uma pessoa do sistema. ")
-        
+
+
 class Cliente(Pessoa):
     def __init__(self, nome, telefone, cpf, endereco):
         super().__init__(nome, telefone, cpf)
@@ -23,17 +26,19 @@ class Cliente(Pessoa):
     def fazer_pedido(self, entregador, produtos):
         return Pedido(self, produtos, entregador)
 
+
 class Funcionario(Pessoa):
     def __init__(self, nome, telefone, cpf, salario):
         super().__init__(nome, telefone, cpf)
         self.salario = salario
 
     def mostrar_funcao(self):
-        print(f"\n{self.nome} é um funcionário do restaurante. ")   
+        print(f"\n{self.nome} é um funcionário do restaurante. ")
 
     def calcular_bonus(self):
         return self.salario * 0.10
-    
+
+
 class Entregador(Funcionario):
     def __init__(self, nome, telefone, cpf, salario, veiculo, entregas_realizadas):
         super().__init__(nome, telefone, cpf, salario)
@@ -47,20 +52,23 @@ class Entregador(Funcionario):
         self.entregas_realizadas += 1
         pedido.status = "Entregue"
         print("entrega realizada")
-    
+
     def calcular_bonus(self):
         return self.entregas_realizadas * 5
+
 
 class Produto:
     def __init__(self, nome, preco):
         self.nome = nome
         self.preco = preco
+
     def mostrar_produto(self):
         print(f"Produto: {self.nome}")
         print(f"Preço: R${self.preco:.2f}")
 
+
 class Pedido:
-    def __init__(self, cliente, produtos, entregador, status = "em preparo"):
+    def __init__(self, cliente, produtos, entregador, status="em preparo"):
         self.cliente = cliente
         self.produtos = produtos
         self.entregador = entregador
@@ -69,9 +77,9 @@ class Pedido:
     def mostrar_pedido(self):
         print(f"Pedido de {self.cliente.nome}:")
         for produto in self.produtos:
-            print(f"- {produto.nome}: R${produto.preco}")
-        print(f"Total: R${self.calcular_total()}")
-        print(f"Frete: R${self.calcular_frete()}")
+            print(f"- {produto.nome}: R${produto.preco:.2f}")
+        print(f"Total: R${self.calcular_total():.2f}")
+        print(f"Frete: R${self.calcular_frete():.2f}")
         print(f"Entregador: {self.entregador.nome}")
         print(f"Status: {self.status}")
 
@@ -84,57 +92,63 @@ class Pedido:
     def calcular_total(self):
         total = sum(produto.preco for produto in self.produtos)
         return total
-    
+
     def calcular_frete(self):
         if self.calcular_total() > 100:
             return 0
         else:
             return 10
-        
+
     def pagamento_cliente(self):
         valor = self.calcular_total() + self.calcular_frete()
         print(f"Pagamento realizado: R${valor:.2f}")
 
-# Exemplo de uso
+# Criação de listas para armazenar os objetos
 
 clientes = []
+funcionarios = []
 produtos = []
 entregadores = []
 pedidos = []
 itens_pedido = []
 
-cliente1 = Cliente("João ", "(51) 12345-678", "123.456.789-01", "Rua A, 123")
-funcionario1 = Funcionario("Luis", "(51) 01020-3040","167.999.123-76", 3000 )
+#Objetos de exemplo para demonstração
+cliente1 = Cliente("João", "(51) 12345-678", "123.456.789-01", "Rua A, 123")
+funcionario1 = Funcionario("Luis", "(51) 01020-3040", "167.999.123-76", 3000)
 entregador1 = Entregador("Henrique", "(51) 8765-4321", "109.876.543-21", 2000, "Moto", 67)
 produto1 = Produto("X-Burguer", 25)
 produto2 = Produto("Refrigerante", 8)
 pedido1 = Pedido(cliente1, [produto1, produto2], entregador1)
-#pedido1.mostrar_pedido()
+
+# pedido1.mostrar_pedido()
 
 clientes.append(cliente1)
+funcionarios.append(funcionario1)
+funcionarios.append(entregador1)
 entregadores.append(entregador1)
 produtos.append(produto1)
 produtos.append(produto2)
+pedidos.append(pedido1)
 
-funcionarios = [funcionario1, entregador1]
-
-print("\n-- Demonstração de Polimorfismo -- \n")
+# Demonstração de Polimorfismo
+print("\n -- Demonstração de Polimorfismo -- \n")
 
 for f in funcionarios:
-    print(f"{f.nome}: R${f.calcular_bonus()}")
+    print(f"{f.nome}: Bônus de R${f.calcular_bonus()}")
 
+# Menu de opções para o usuário
 while True:
-    print ("\n --SISTEMA DE DELIVERY-- \n")
-    print ("opcão 1: cadastrar cliente")
-    print ("opção 2: cadastrar entregador")
-    print ("opção 3: cadastrar produto")
-    print ("opção 4: fazer pedido")
-    print ("opção 5: atualizar status do pedido")
-    print ("opção 6: mostrar funções")
-    print ("opção 7: mostrar pedidos")
-    print ("opção 0: sair")
+    print("\n --SISTEMA DE DELIVERY-- \n")
+    print("opcão 1: cadastrar cliente")
+    print("opção 2: cadastrar entregador")
+    print("opção 3: cadastrar produto")
+    print("opção 4: fazer pedido")
+    print("opção 5: atualizar status do pedido")
+    print("opção 6: mostrar funções")
+    print("opção 7: mostrar pedidos")
+    print("opção 0: sair")
 
-    opcao = int(input("Digite a opção desejada: "))
+    opcao = int(input("\nDigite o número daopção desejada: "))
 
     if opcao == 0:
         print("Adeus")
@@ -157,6 +171,7 @@ while True:
         veiculo = input("Veículo do entregador: ")
         entregador = Entregador(nome, telefone, cpf, salario, veiculo, 0)
         entregadores.append(entregador)
+        funcionarios.append(entregador)
         print(f"Entregador {entregador.nome} cadastrado com sucesso!")
 
     elif opcao == 3:
@@ -168,24 +183,47 @@ while True:
 
     elif opcao == 4:
         cliente_nome = input("Nome do cliente: ")
-        cliente = next((c for c in clientes if c.nome == cliente_nome), None)
+
+        cliente = None
+
+        for c in clientes:
+            if c.nome == cliente_nome:
+                cliente = c
+                break
+
         if not cliente:
             print("Cliente não encontrado.")
             continue
+
         produto_nomes = input("Produtos (separados por vírgula): ").split(",")
         itens_pedido = []
+
         for nome in produto_nomes:
-            produto = next((p for p in produtos if p.nome == nome.strip()), None)
-            if produto:
-                itens_pedido.append(produto)
+            produto_encontrado = None
+
+            for p in produtos:
+                if p.nome == nome.strip():
+                    produto_encontrado = p
+                    break
+
+            if produto_encontrado:
+                itens_pedido.append(produto_encontrado)
             else:
                 print(f"Produto '{nome.strip()}' não encontrado.")
-            
+
         entregador_nome = input("Nome do entregador: ")
-        entregador = next((e for e in entregadores if e.nome == entregador_nome), None)
+
+        entregador = None
+
+        for e in entregadores:
+            if e.nome == entregador_nome:
+                entregador = e
+                break
+
         if not entregador:
             print("Entregador não encontrado.")
             continue
+
         pedido = cliente.fazer_pedido(entregador, itens_pedido)
         pedidos.append(pedido)
         pedido.pagamento_cliente()
@@ -198,14 +236,14 @@ while True:
 
         print("Pedidos:")
         for i, p in enumerate(pedidos, 1):
-                print(f"  {i}. {p.cliente.nome} – Status: {p.status}")
+            print(f"  {i}. {p.cliente.nome} – Status: {p.status}")
 
         indice = int(input("Número do pedido: ")) - 1
 
         if indice < 0 or indice >= len(pedidos):
             print("Opção inválida.")
             continue
-        
+
         novo_status = input("Novo status: ")
         pedidos[indice].status = novo_status
 
@@ -226,5 +264,5 @@ while True:
         for pedido in pedidos:
             pedido.mostrar_pedido()
 
-    else:    print("Opção inválida.")
-        
+    else:
+        print("Opção inválida.")
