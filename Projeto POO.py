@@ -124,7 +124,7 @@ for f in funcionarios:
     print(f"{f.nome}: R${f.calcular_bonus()}")
 
 while True:
-    print ("\n --cadastro de clientes-- \n")
+    print ("\n --SISTEMA DE DELIVERY-- \n")
     print ("opcão 1: cadastrar cliente")
     print ("opção 2: cadastrar entregador")
     print ("opção 3: cadastrar produto")
@@ -186,9 +186,9 @@ while True:
         if not entregador:
             print("Entregador não encontrado.")
             continue
-        pedido = cliente.fazer_pedido(entregador, itens_pedidos)
+        pedido = cliente.fazer_pedido(entregador, itens_pedido)
         pedidos.append(pedido)
-        peido.pagamento_cliente()
+        pedido.pagamento_cliente()
         print(f"Pedido de {cliente.nome} criado com sucesso!")
 
     elif opcao == 5:
